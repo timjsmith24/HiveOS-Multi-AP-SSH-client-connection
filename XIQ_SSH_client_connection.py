@@ -92,6 +92,7 @@ def ap_ssh(ip,port,mp_queue):
         x = chan.recv(1024)
         clientfound = False
         msg = ''
+        firstRun = True
         try:
             while capturing:            
                 x = chan.recv(64)
@@ -104,14 +105,15 @@ def ap_ssh(ip,port,mp_queue):
                         mp_queue.put(f'{now.strftime("%Y-%m-%d %H:%M:%S")}: Roaming from {devicename}\t[{msg}]')
                     clientfound = False
                 elif clientfound == False and 'request station information failed because of station leave' not in str(x) and len(x) > 50:
-                    sys.stdout.write(GREEN)
-                    sys.stdout.write(f"### Client roamed to {devicename} ###\n")
-                    sys.stdout.write(RESET)
-                    sys.stdout.flush()
+                    if not firstRun:
+                        sys.stdout.write(GREEN)
+                        sys.stdout.write(f"### Client roamed to {devicename} ###\n")
+                        sys.stdout.write(RESET)
+                        sys.stdout.flush()
+                        output = x.decode("utf-8") 
+                        now = datetime.datetime.now()
+                        mp_queue.put(f'{now.strftime("%Y-%m-%d %H:%M:%S")}: Roaming to {devicename}\t[{output.rstrip()}]')
                     clientfound = True
-                    output = x.decode("utf-8") 
-                    now = datetime.datetime.now()
-                    mp_queue.put(f'{now.strftime("%Y-%m-%d %H:%M:%S")}: Roaming to {devicename}\t[{output.rstrip()}]')
                 #print(f"LENGTH - {len(x)}", end= ' ')
                 if len(x) == 0:
                     capturing = False
@@ -123,6 +125,8 @@ def ap_ssh(ip,port,mp_queue):
                     sys.stdout.write(RESET)
                     sys.stdout.write(f" {output}")
                     sys.stdout.flush()
+                if firstRun:
+                    firstRun = False
             sys.stdout.write(RED)
             sys.stdout.write(f"#### Lost connection to {devicename} ####\n")
             sys.stdout.write(RESET)
