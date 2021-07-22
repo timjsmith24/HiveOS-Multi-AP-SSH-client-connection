@@ -16,8 +16,8 @@ username = 'admin'
 password = 'Extreme123!'
 
 device_list = [
-    ('34.202.197.48','20106'),
-    ('34.202.197.47','20086')
+    ('34.202.197.48','20087'),
+    ('34.202.197.48','20171')
 ]
 
 parser = argparse.ArgumentParser()
@@ -71,11 +71,17 @@ def ap_ssh(ip,port,mp_queue):
         ssh.connect(ip,port = port, username = username , password = password ,timeout=10)
         chan = ssh.invoke_shell()
     except AuthenticationException:
-        print("Authentication failed on " + ip + ", please verify your credentials: %s")
+        sys.stdout.write(RED)
+        sys.stdout.write("Authentication failed on " + ip + ", please verify your credentials:")
+        sys.stdout.write(RESET)
     except SSHException as sshException:
-        print("Unable to establish SSH connection on " + ip + ": %s" % sshException)
+        sys.stdout.write(RED)
+        sys.stdout.write("Unable to establish SSH connection on " + ip + ": %s" % sshException)
+        sys.stdout.write(RESET)
     except BadHostKeyException as badHostKeyException:
-        print("Unable to verify server's host key on " + ip + ": %s" % badHostKeyException)
+        sys.stdout.write(RED)
+        sys.stdout.write("Unable to verify server's host key on " + ip + ": %s" % badHostKeyException)
+        sys.stdout.write(RESET)
     except Exception as e:
         sys.stdout.write(RED)
         sys.stdout.write("Operation error on " + ip + ": %s\n" % e)	
