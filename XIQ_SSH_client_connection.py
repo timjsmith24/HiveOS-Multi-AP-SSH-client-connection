@@ -16,8 +16,8 @@ username = 'admin'
 password = 'Extreme123!'
 
 device_list = [
-    ('34.202.197.48','20087'),
-    ('34.202.197.48','20171')
+    ('34.202.197.47','20152'),
+    ('34.202.197.47','20063')
 ]
 
 parser = argparse.ArgumentParser()
@@ -72,15 +72,15 @@ def ap_ssh(ip,port,mp_queue):
         chan = ssh.invoke_shell()
     except AuthenticationException:
         sys.stdout.write(RED)
-        sys.stdout.write("Authentication failed on " + ip + ", please verify your credentials:")
+        sys.stdout.write("Authentication failed on " + ip + ", please verify your credentials:\n")
         sys.stdout.write(RESET)
     except SSHException as sshException:
         sys.stdout.write(RED)
-        sys.stdout.write("Unable to establish SSH connection on " + ip + ": %s" % sshException)
+        sys.stdout.write("Unable to establish SSH connection on " + ip + ": %s\n" % sshException)
         sys.stdout.write(RESET)
     except BadHostKeyException as badHostKeyException:
         sys.stdout.write(RED)
-        sys.stdout.write("Unable to verify server's host key on " + ip + ": %s" % badHostKeyException)
+        sys.stdout.write("Unable to verify server's host key on " + ip + ": %s\n" % badHostKeyException)
         sys.stdout.write(RESET)
     except Exception as e:
         sys.stdout.write(RED)
@@ -108,7 +108,7 @@ def ap_ssh(ip,port,mp_queue):
                     if clientfound == True:
                         output = x.decode("utf-8") 
                         now = datetime.datetime.now()
-                        mp_queue.put(f'{now.strftime("%Y-%m-%d %H:%M:%S")}: Roaming from {devicename}\t[{msg}]')
+                        mp_queue.put(f'{now.strftime("%Y-%m-%d %H:%M:%S")}: Roaming from {devicename}\t[{msg.rstrip()}]')
                     clientfound = False
                 elif clientfound == False and 'request station information failed because of station leave' not in str(x) and len(x) > 50:
                     if not firstRun:
