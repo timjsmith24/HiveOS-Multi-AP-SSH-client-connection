@@ -32,7 +32,7 @@ python3 XIQ_SSH_client_connection.py 0E6C82A1787E
 #### Terminal Window
 
 <p align="center">
-<img scr="../master/images/XIQ_SSH_client_connection_output.png" alt="XIQ client connection output" height="400ox">
+<img scr="../master/images/XIQ_SSH_client_connection_output.png" alt="XIQ client connection output" height="400px">
 </p>
 
 #### Log file
