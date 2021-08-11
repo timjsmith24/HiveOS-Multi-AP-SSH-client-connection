@@ -1,4 +1,3 @@
-/0E6C82A1787E--(2021-07-21).log
-/0E6C82A1787E--(2021-07-22).log
+*.log
 /venv
-E600ECF36BA3--(2021-07-22).log
+*.code-workspace

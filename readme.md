@@ -22,11 +22,14 @@ device_list = [
     ('34.202.197.48','20059')
 ]
 ```
-#### client mac address
+## Running eScript
+#### entering client mac address
 When running the script from terminal add the mac address after the script name
 ```
 python3 XIQ_SSH_client_connection.py 0E6C82A1787E
 ```
+#### exiting sessions
+Once sessions are established, the script will continue to run until ctrl-c is pressed
 
 ## Script Outputs
 #### Terminal Window
